@@ -16,7 +16,7 @@ A self-hosted Wordle game for WordPress — with a database-backed word pool, le
 
 = Source Code =
 Full source code including React/TypeScript files:
-https://github.com/SamSkull19/SS-Letter-Quest-Plugin
+https://github.com/SamSkull19/WordSprint-Plugin
 
 = How It Works =
 

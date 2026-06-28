@@ -1,6 +1,6 @@
 <?php
 /**
- * Main class file for the SS Wordle plugin.
+ * Main class file for the WordSprint plugin.
  *
  * Contains the WordSprint_Main class which initializes the plugin, registers
  * hooks, and handles database upgrades.

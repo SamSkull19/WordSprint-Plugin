@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shortcode handler for the SS Wordle plugin.
+ * Shortcode handler for the WordSprint plugin.
  */
 class WordSprint_Shortcode {
 

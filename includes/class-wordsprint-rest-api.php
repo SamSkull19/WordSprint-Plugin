@@ -1,6 +1,6 @@
 <?php
 /**
- * Rest API Routes for SS Wordle
+ * Rest API Routes for WordSprint
  *
  * Game-play routes are server-authoritative: the answer word is never sent
  * to the client until the game ends (won/lost), so the word can't be read

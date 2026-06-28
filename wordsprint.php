@@ -2,7 +2,7 @@
 // phpcs:ignoreFile WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name:         WordSprint
- * Plugin URI:  		https://github.com/SamSkull19/SS-Letter-Quest-Plugingit status
+ * Plugin URI:  		https://github.com/SamSkull19/WordSprint-Plugin
  * Description:         A self-hosted Wordle game with a DB-backed word list, leaderboard, and shortcode embed.
  * Version:             1.0.0
  * Requires at least:   6.0
