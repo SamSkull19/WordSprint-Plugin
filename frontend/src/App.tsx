@@ -162,7 +162,7 @@ export default function App() {
 	const isBusy = state.status === 'idle' || state.status === 'loading';
 
 	return (
-		<div className="flex flex-col items-center mx-auto min-h-dvh w-full max-w-125 px-4 pb-8">
+		<div className="flex flex-col items-center mx-auto min-h-dvh w-full max-w-125 px-4 py-4">
 			<header className="flex w-full flex-col gap-2 border-b border-border py-3 mb-6">
 
 				<div className="flex items-center justify-between gap-5">
@@ -178,7 +178,7 @@ export default function App() {
 					</h1>
 
 					<div className="flex items-center gap-3">
-						<div className="flex gap-3 text-[0.85rem] text-muted">
+						<div className="flex gap-3 text-sm md:text-base text-muted">
 							<span>🏆 {stats.wins}</span>
 							<span>🔥 {stats.streak}</span>
 						</div>
@@ -206,16 +206,16 @@ export default function App() {
 				</div>
 
 				{ /* Leaderboard / New Game buttons */}
-				<div className="flex gap-2">
+				<div className="flex justify-between gap-4">
 					<button
-						className="flex-1 rounded border border-border bg-transparent px-3 py-2 text-xs text-muted transition-colors hover:bg-surface hover:text-text touch-manipulation sm:flex-none sm:px-3 sm:py-2.5"
+						className="flex-1 rounded border border-border bg-transparent px-5 py-2 text-sm text-muted font-semibold transition-colors hover:bg-surface hover:text-text touch-manipulation sm:flex-none sm:px-5 sm:py-2.5"
 						onClick={() => setShowLeaderboard((v) => !v)}
 					>
 						{showLeaderboard ? 'Hide leaderboard' : 'Leaderboard'}
 					</button>
 
 					<button
-						className="flex-1 rounded border border-border bg-transparent px-3 py-2 text-xs text-muted transition-colors hover:bg-surface hover:text-text touch-manipulation sm:flex-none sm:px-3 sm:py-2.5"
+						className="flex-1 rounded border border-border bg-transparent px-5 py-2 text-sm text-muted font-semibold  transition-colors hover:bg-surface hover:text-text touch-manipulation sm:flex-none sm:px-5 sm:py-2.5"
 						onClick={handleReset}
 						disabled={isBusy}
 					>
