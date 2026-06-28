@@ -1,0 +1,197 @@
+.wordsprint-admin {
+    max-width: 1100px;
+    margin-top: 20px;
+}
+
+.wordsprint-admin__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.wordsprint-admin__header h1 {
+    margin: 0;
+}
+
+.wordsprint-shortcode-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.4;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.wordsprint-shortcode-badge:hover {
+    background: #f0f0f1;
+    border-color: #8c8f94;
+}
+
+.wordsprint-shortcode-badge:active {
+    background: #e0e0e0;
+}
+
+.wordsprint-shortcode-badge code {
+    background: transparent;
+    padding: 0;
+    font-size: 13px;
+}
+
+.wordsprint-shortcode-badge__hint {
+    color: #757575;
+    font-size: 12px;
+}
+
+.wordsprint-admin__tabs .components-tab-panel__tabs {
+    margin-bottom: 16px;
+}
+
+.wordsprint-words__add-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 420px;
+    margin-bottom: 24px;
+}
+
+.wordsprint-words__add-form .components-base-control {
+    flex: 1;
+}
+
+.wordsprint-words__table {
+    margin-top: 16px;
+}
+
+.wordsprint-words__actions {
+    display: flex;
+    gap: 6px;
+}
+
+.wordsprint-words__pagination {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.wordsprint-bulk-import form {
+    max-width: 480px;
+}
+
+.wordsprint-bulk-import__result {
+    margin-top: 16px;
+}
+
+.wordsprint-stats__cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.wordsprint-stats__card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.wordsprint-stats__value {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.wordsprint-stats__label {
+    color: #757575;
+    font-size: 13px;
+}
+
+.wordsprint-appearance__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 480px;
+    margin-bottom: 24px;
+}
+
+.wordsprint-appearance__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.wordsprint-appearance__label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wordsprint-appearance__label small {
+    color: #757575;
+    font-size: 12px;
+}
+
+.wordsprint-appearance__swatch-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wordsprint-appearance__swatch {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 2px;
+    cursor: pointer;
+    background: none;
+}
+
+.wordsprint-appearance__hex {
+    width: 90px;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 4px 8px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+.wordsprint-appearance__preview {
+    max-width: 480px;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.wordsprint-appearance__preview-tiles {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.wordsprint-appearance__preview-tile {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    border-radius: 2px;
+}
+
+.wordsprint-appearance__actions {
+    display: flex;
+    gap: 12px;
+}

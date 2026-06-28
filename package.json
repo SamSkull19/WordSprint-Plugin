@@ -1,0 +1,28 @@
+{
+  "name": "wordsprint",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wordsprint - a DB-backed Wordle game for WordPress with admin word management and leaderboard.",
+  "scripts": {
+    "build": "wp-scripts build --webpack-copy-php",
+    "start": "wp-scripts start",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js",
+    "lint:ts": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@wordpress/scripts": "^32.4.1",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@wordpress/api-fetch": "^6.50.0",
+    "@wordpress/components": "^27.0.0",
+    "@wordpress/element": "^5.31.0",
+    "@wordpress/i18n": "^4.54.0",
+    "@wordpress/icons": "^9.44.0"
+  }
+}

@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+	--color-bg: #121213;
+	--color-surface: #1e1e1f;
+	--color-border: #3a3a3c;
+	--color-muted: #818384;
+	--color-correct: #538d4e;
+	--color-present: #b59f3b;
+	--color-absent: #3a3a3c;
+	--color-text: #ffffff;
+	--color-key: #818384;
+	--color-key-text: #ffffff;
+	--width-125: 35.25rem;
+	--max-width-125: 35.25rem;
+}
+
+#wordsprint-root {
+	background-color: var(--color-bg);
+	color: var(--color-text, #ffffff);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@keyframes pop {
+	0% {
+		transform: scale(0.9);
+	}
+
+	40% {
+		transform: scale(1.08);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+.animate-pop {
+	animation: pop 0.12s ease-out;
+}
+
+@keyframes fadeInOut {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, -8px);
+	}
+
+	10% {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
+
+	90% {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate(-50%, -8px);
+	}
+}
+
+.animate-fadeInOut {
+	animation: fadeInOut 1.8s ease-in-out forwards;
+}
+
+
+@keyframes flip {
+	0% {
+		transform: rotateX(0deg);
+	}
+
+	50% {
+		transform: rotateX(90deg);
+	}
+
+	100% {
+		transform: rotateX(0deg);
+	}
+}
+
+.animate-flip {
+	animation: flip 0.5s ease-in-out;
+	animation-fill-mode: both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-flip {
+		animation: none;
+	}
+}
