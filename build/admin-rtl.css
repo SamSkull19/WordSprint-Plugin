@@ -76,8 +76,129 @@
 .wordsprint-words__pagination {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 12px;
     margin-top: 16px;
+}
+
+.wordsprint-words__pagination-info {
+    font-size: 12px;
+    color: #757575;
+    white-space: nowrap;
+}
+
+.wordsprint-words__pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.wordsprint-words__pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0 4px;
+}
+
+.wordsprint-words__pagination-number {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.wordsprint-words__pagination-number:hover {
+    background: #f0f0f1;
+    border-color: #8c8f94;
+}
+
+.wordsprint-words__pagination-number.is-active {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+    font-weight: 600;
+    cursor: default;
+}
+
+.wordsprint-words__pagination-ellipsis {
+    padding: 0 4px;
+    color: #757575;
+    font-size: 12px;
+}
+
+.wordsprint-words__pagination-jump {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #757575;
+}
+
+.wordsprint-words__pagination-jump input {
+    width: 56px;
+    padding: 4px 6px;
+    border: 1px solid #c3c4c7;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.wordsprint-pattern-search {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+}
+
+.wordsprint-pattern-search__label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.wordsprint-pattern-search__hint {
+    font-size: 12px;
+    font-weight: 400;
+    color: #757575;
+}
+
+.wordsprint-pattern-search__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.wordsprint-pattern-search__slots {
+    display: flex;
+    gap: 6px;
+}
+
+.wordsprint-pattern-search__slot {
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 2px solid #c3c4c7;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.wordsprint-pattern-search__slot:focus {
+    border-color: #2271b1;
+    outline: none;
 }
 
 .wordsprint-bulk-import form {

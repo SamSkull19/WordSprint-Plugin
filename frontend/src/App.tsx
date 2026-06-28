@@ -116,7 +116,6 @@ export default function App() {
 			});
 		}
 		else {
-			showToast(state.answer, 3000);
 			setStats({ ...stats, played: stats.played + 1, streak: 0 });
 		}
 	}, [state.status, animatingRowIndex]);
@@ -244,6 +243,20 @@ export default function App() {
 				) : (
 					<main className="flex w-full flex-1 flex-col items-center justify-center gap-6">
 						{isBusy && <p className="text-sm text-muted">Loading game…</p>}
+
+						{
+							state.status === 'lost' && animatingRowIndex === null && (
+								<div
+									role="status"
+									className="w-full max-w-sm rounded-md border border-border bg-surface px-4 py-2.5 text-center text-sm text-text"
+								>
+									The word was{' '}
+									<span className="font-bold uppercase tracking-wide text-correct">
+										{state.answer}
+									</span>
+								</div>
+							)
+						}
 
 						{
 							!isBusy && state.status !== 'error' && (

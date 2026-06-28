@@ -763,10 +763,7 @@ class WordSprint_REST_API {
 		return new WP_REST_Response( $leaderboard, 200 );
 	}
 
-	// ---------------------------------------------------------------
-	// Admin: word management
-	// ---------------------------------------------------------------
-
+	// Admin: word management.
 	/**
 	 * List words with optional search + pagination.
 	 *
@@ -778,6 +775,7 @@ class WordSprint_REST_API {
 		$words_table = WordSprint_DB::words_table();
 
 		$search         = sanitize_text_field( (string) $request->get_param( 'search' ) );
+		$pattern_param  = sanitize_text_field( (string) $request->get_param( 'letter_pattern' ) );
 		$page_param     = $request->get_param( 'page' );
 		$page           = max( 1, (int) $page_param ? (int) $page_param : 1 );
 		$per_page_param = $request->get_param( 'per_page' );
@@ -786,20 +784,43 @@ class WordSprint_REST_API {
 
 		$escaped_table = esc_sql( $words_table );
 
+		$letter_pattern = '';
+		if ( '' !== $pattern_param ) {
+			$normalized = strtolower( $pattern_param );
+			for ( $i = 0; $i < 5; $i++ ) {
+				$char            = isset( $normalized[ $i ] ) ? $normalized[ $i ] : '_';
+				$letter_pattern .= ( $char >= 'a' && $char <= 'z' ) ? $char : '_';
+			}
+		}
+
+		$where_clauses = array();
+		$where_args    = array();
+
 		if ( '' !== $search ) {
+			$where_clauses[] = 'word LIKE %s';
+			$where_args[]    = '%' . $wpdb->esc_like( strtolower( $search ) ) . '%';
+		}
+
+		if ( '' !== $letter_pattern && '_____' !== $letter_pattern ) {
+			$escaped_pattern = str_replace( array( '\\', '%' ), array( '\\\\', '\\%' ), $letter_pattern );
+			$where_clauses[] = 'word LIKE %s';
+			$where_args[]    = $escaped_pattern;
+		}
+
+		$where_sql = $where_clauses ? ( ' WHERE ' . implode( ' AND ', $where_clauses ) ) : '';
+
+		if ( $where_args ) {
 			$total = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				$wpdb->prepare(
-					'SELECT COUNT(*) FROM ' . $escaped_table . ' WHERE word LIKE %s', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-					'%' . $wpdb->esc_like( strtolower( $search ) ) . '%'
+					'SELECT COUNT(*) FROM ' . $escaped_table . $where_sql, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					$where_args
 				)
 			);
 
 			$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				$wpdb->prepare(
-					'SELECT id, word, is_active, times_played, times_won, created_at FROM ' . $escaped_table . ' WHERE word LIKE %s ORDER BY created_at DESC LIMIT %d OFFSET %d', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-					'%' . $wpdb->esc_like( strtolower( $search ) ) . '%',
-					$per_page,
-					$offset
+					'SELECT id, word, is_active, times_played, times_won, created_at FROM ' . $escaped_table . $where_sql . ' ORDER BY created_at DESC LIMIT %d OFFSET %d', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					array_merge( $where_args, array( $per_page, $offset ) )
 				)
 			);
 		} else {

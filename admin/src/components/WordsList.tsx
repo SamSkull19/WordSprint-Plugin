@@ -1,5 +1,5 @@
 import { useEffect, useState } from '@wordpress/element';
-import type { FormEvent, ChangeEvent } from 'react';
+import type { FormEvent, ChangeEvent, KeyboardEvent } from 'react';
 import { Button, TextControl, ToggleControl, Spinner, Notice } from '@wordpress/components';
 import type { WordRow } from '../types';
 import { listWords, createWord, updateWord, deleteWord } from '../lib/api';
@@ -66,8 +66,11 @@ export default function WordsList() {
 	// --- List state ---
 	const [words, setWords] = useState<WordRow[]>([]);
 	const [totalPages, setTotalPages] = useState(1);
+	const [total, setTotal] = useState(0);
 	const [page, setPage] = useState(1);
 	const [search, setSearch] = useState('');
+	const [letterPattern, setLetterPattern] = useState<string[]>(['', '', '', '', '']);
+	const [pageJump, setPageJump] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -103,14 +106,23 @@ export default function WordsList() {
 
 	// Data loading
 
-	const load = (targetPage = page, targetSearch = search) => {
+	const letterPatternString = () => letterPattern.map((c) => c || '_').join('');
+	const hasLetterPattern = () => letterPattern.some((c) => c !== '');
+
+	const load = (targetPage = page, targetSearch = search, targetPattern = letterPatternString()) => {
 		setLoading(true);
 		setError(null);
 
-		listWords({ page: targetPage, search: targetSearch, per_page: 20 })
+		listWords({
+			page: targetPage,
+			search: targetSearch,
+			letter_pattern: /_{5}/.test(targetPattern) ? undefined : targetPattern,
+			per_page: 20,
+		})
 			.then((res) => {
 				setWords(res.words);
 				setTotalPages(res.total_pages);
+				setTotal(res.total);
 				setSelectedIds((prev) => {
 					const visibleIds = new Set(res.words.map((w) => w.id));
 					const next = new Set<number>();
@@ -122,8 +134,8 @@ export default function WordsList() {
 			.finally(() => setLoading(false));
 	};
 
-	useEffect(() => { load(1, search); setPage(1); }, [search]);
-	useEffect(() => { load(page, search); }, [page]);
+	useEffect(() => { load(1, search, letterPatternString()); setPage(1); }, [search, letterPattern.join('')]);
+	useEffect(() => { load(page, search, letterPatternString()); }, [page]);
 
 	// Add word
 
@@ -222,6 +234,61 @@ export default function WordsList() {
 	const handleExportAll = (filter: 'all' | 'active' | 'inactive') => {
 		setExportMenuOpen(false);
 		triggerDownload(buildExportUrl({ format: exportFormat, filter }));
+	};
+
+	// Letter-position search ("find words where the 3rd letter is E")
+
+	const handlePatternSlotChange = (index: number, raw: string) => {
+		const char = raw.slice(-1).toLowerCase().replace(/[^a-z]/, '');
+		setLetterPattern((prev) => {
+			const next = [...prev];
+			next[index] = char;
+			return next;
+		});
+
+		if (char) {
+			const nextInput = document.getElementById(`wordsprint-pattern-slot-${index + 1}`);
+			nextInput?.focus();
+		}
+	};
+
+	const handlePatternSlotKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Backspace' && !letterPattern[index] && index > 0) {
+			const prevInput = document.getElementById(`wordsprint-pattern-slot-${index - 1}`) as HTMLInputElement | null;
+			prevInput?.focus();
+			prevInput?.select();
+		}
+	};
+
+	const clearLetterPattern = () => setLetterPattern(['', '', '', '', '']);
+
+	// Pagination helpers
+
+	const getPageNumbers = (): (number | 'ellipsis')[] => {
+		const lastPage = totalPages || 1;
+		if (lastPage <= 7) return Array.from({ length: lastPage }, (_, i) => i + 1);
+
+		const pages = new Set<number>([1, 2, lastPage - 1, lastPage, page - 1, page, page + 1]);
+		const sorted = [...pages].filter((p) => p >= 1 && p <= lastPage).sort((a, b) => a - b);
+
+		const result: (number | 'ellipsis')[] = [];
+		sorted.forEach((p, idx) => {
+			if (idx > 0 && p - sorted[idx - 1] > 1) result.push('ellipsis');
+			result.push(p);
+		});
+		return result;
+	};
+
+	const goToPage = (target: number) => {
+		const clamped = Math.min(Math.max(1, target), totalPages || 1);
+		setPage(clamped);
+	};
+
+	const handlePageJumpSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const target = parseInt(pageJump, 10);
+		if (!Number.isNaN(target)) goToPage(target);
+		setPageJump('');
 	};
 
 	// Render
@@ -370,6 +437,45 @@ export default function WordsList() {
 				</div>
 			</div>
 
+			<div className="wordsprint-pattern-search">
+				<div className="wordsprint-pattern-search__label">
+					Search by letter position
+					<span className="wordsprint-pattern-search__hint">
+						Fill in any letters you know — leave the rest blank as wildcards.
+					</span>
+				</div>
+
+				<div className="wordsprint-pattern-search__row">
+					<div className="wordsprint-pattern-search__slots">
+						{
+							letterPattern.map((char, idx) => (
+								<input
+									key={idx}
+									id={`wordsprint-pattern-slot-${idx}`}
+									type="text"
+									inputMode="text"
+									maxLength={1}
+									value={char.toUpperCase()}
+									placeholder="–"
+									aria-label={`Letter ${idx + 1}`}
+									className="wordsprint-pattern-search__slot"
+									onChange={(e) => handlePatternSlotChange(idx, e.target.value)}
+									onKeyDown={(e) => handlePatternSlotKeyDown(idx, e)}
+								/>
+							))
+						}
+					</div>
+
+					{
+						hasLetterPattern() && (
+							<Button variant="tertiary" size="small" onClick={clearLetterPattern}>
+								Clear pattern
+							</Button>
+						)
+					}
+				</div>
+			</div>
+
 			{
 				exportMenuOpen && (
 					<div
@@ -473,15 +579,61 @@ export default function WordsList() {
 						</table>
 
 						<div className="wordsprint-words__pagination">
-							<Button variant="secondary" disabled={page <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
-								Previous
-							</Button>
+							<div className="wordsprint-words__pagination-info">
+								{total} word{total === 1 ? '' : 's'} total
+							</div>
 
-							<span>Page {page} of {totalPages || 1}</span>
+							<div className="wordsprint-words__pagination-controls">
+								<Button variant="secondary" size="small" disabled={page <= 1} onClick={() => goToPage(1)}>
+									« First
+								</Button>
 
-							<Button variant="secondary" disabled={page >= totalPages} onClick={() => setPage((p) => p + 1)}>
-								Next
-							</Button>
+								<Button variant="secondary" size="small" disabled={page <= 1} onClick={() => goToPage(page - 1)}>
+									‹ Prev
+								</Button>
+
+								<div className="wordsprint-words__pagination-numbers">
+									{
+										getPageNumbers().map((p, idx) =>
+											p === 'ellipsis' ? (
+												<span key={`ellipsis-${idx}`} className="wordsprint-words__pagination-ellipsis">…</span>
+											) : (
+												<button
+													key={p}
+													type="button"
+													className={`wordsprint-words__pagination-number${p === page ? ' is-active' : ''}`}
+													aria-current={p === page ? 'page' : undefined}
+													onClick={() => goToPage(p)}
+												>
+													{p}
+												</button>
+											)
+										)
+									}
+								</div>
+
+								<Button variant="secondary" size="small" disabled={page >= totalPages} onClick={() => goToPage(page + 1)}>
+									Next ›
+								</Button>
+
+								<Button variant="secondary" size="small" disabled={page >= totalPages} onClick={() => goToPage(totalPages)}>
+									Last »
+								</Button>
+							</div>
+
+							<form className="wordsprint-words__pagination-jump" onSubmit={handlePageJumpSubmit}>
+								<label htmlFor="wordsprint-page-jump">Go to page</label>
+								<input
+									id="wordsprint-page-jump"
+									type="number"
+									min={1}
+									max={totalPages || 1}
+									value={pageJump}
+									placeholder={String(page)}
+									onChange={(e) => setPageJump(e.target.value)}
+								/>
+								<Button variant="secondary" size="small" type="submit">Go</Button>
+							</form>
 						</div>
 					</>
 				)
