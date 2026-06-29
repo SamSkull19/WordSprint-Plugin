@@ -13,12 +13,12 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 global $wpdb;
 
-$words_table   = $wpdb->prefix . 'wordsprint_words';
-$results_table = $wpdb->prefix . 'wordsprint_results';
+$wordsprint_words_table   = $wpdb->prefix . 'wordsprint_words';
+$wordsprint_results_table = $wpdb->prefix . 'wordsprint_results';
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-$wpdb->query( "DROP TABLE IF EXISTS {$results_table}" );
-$wpdb->query( "DROP TABLE IF EXISTS {$words_table}" );
+$wpdb->query( 'DROP TABLE IF EXISTS ' . esc_sql( $wordsprint_results_table ) );
+$wpdb->query( 'DROP TABLE IF EXISTS ' . esc_sql( $wordsprint_words_table ) );
 // phpcs:enable
 
 delete_option( 'wordsprint_db_version' );

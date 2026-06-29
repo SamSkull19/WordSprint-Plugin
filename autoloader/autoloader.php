@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-spl_autoload_register( 'autoloader' );
+spl_autoload_register( 'wordsprint_autoloader' );
 
 /**
  * Autoload classes prefixed with "WordSprint_" by requiring the corresponding
@@ -21,7 +21,7 @@ spl_autoload_register( 'autoloader' );
  * @return bool|null False if the class should not be handled or file not found,
  *                   null on successful require.
  */
-function autoloader( $class_name ) {
+function wordsprint_autoloader( $class_name ) {
 	if ( strpos( $class_name, 'WordSprint_' ) !== 0 ) {
 		return false;
 	}

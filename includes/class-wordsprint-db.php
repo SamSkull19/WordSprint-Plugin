@@ -98,9 +98,12 @@ class WordSprint_DB {
 	 */
 	private static function maybe_seed_default_words() {
 		global $wpdb;
+
 		$words_table = self::words_table();
 
-		$existing_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$words_table}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$existing_count = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			'SELECT COUNT(*) FROM ' . esc_sql( $words_table ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		);
 
 		if ( $existing_count > 0 ) {
 			return;
