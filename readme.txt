@@ -1,6 +1,6 @@
 === WordSprint ===
 Contributors: sifatsamin
-Tags: wordle, word game, puzzle, game, shortcode
+Tags: wordsprint, word game, puzzle, vocabulary, shortcode, leaderboard
 Requires at least: 6.0
 Tested up to: 7.0
 Stable tag: 1.0.0
@@ -8,11 +8,11 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A self-hosted Wordle game for WordPress — with a database-backed word pool, leaderboard, admin word manager, and a simple shortcode embed.
+A self-hosted word-guessing game for WordPress — with a database-backed word pool, leaderboard, admin word manager, and a simple shortcode embed.
 
 == Description ==
 
-**WordSprint** brings the popular Wordle word-guessing game to your WordPress site. Visitors get 6 attempts to guess a hidden 5-letter word, with colour-coded tile feedback after every guess. Everything runs on your own server — no third-party game API required.
+**WordSprint** brings a classic word-guessing experience to your WordPress site. Visitors get 6 attempts to guess a hidden 5-letter word, with colour-coded tile feedback after every guess. Everything runs on your own server — no third-party game API required.
 
 = Source Code =
 Full source code including React/TypeScript files:
@@ -25,7 +25,7 @@ Players click "New Game" to receive a randomly selected word from your word pool
 = Key Features =
 
 **For Players**
-* Classic 5-letter, 6-guess Wordle gameplay
+* Classic 5-letter, 6-guess word-guessing gameplay
 * Server-authoritative guess evaluation — the answer is never exposed client-side while the game is in progress
 * Leaderboard showing win counts, win rate, and average guesses per player
 * Works for both logged-in WordPress members (display name auto-populated) and anonymous guests (identified by a browser-local UUID)
@@ -63,7 +63,7 @@ The core gameplay mechanic — six attempts to guess a hidden five-letter word, 
 4. Go to **WordSprint** in the admin menu to add words to your word pool.
 5. Edit any page or post, add the shortcode `[wordsprint]`, and publish.
 
-Your visitors can now play Wordle on your site.
+Your visitors can now play the word-guessing game on your site.
 
 **Note:** The plugin ships with a small set of starter words so the game is playable immediately after activation. Replace or expand this list from the **WordSprint → Words** admin panel.
 
@@ -119,7 +119,7 @@ Both tables are removed cleanly on plugin deletion.
 
 = 1.0.0 =
 * Initial release
-* Server-authoritative Wordle gameplay with 6-guess limit
+* Server-authoritative word-guessing gameplay with 6-guess limit
 * Database-backed word pool with admin management UI
 * Bulk word import (newline / comma separated) with per-word validation
 * Bulk word export as CSV or TXT

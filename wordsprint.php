@@ -3,7 +3,7 @@
 /**
  * Plugin Name:         WordSprint
  * Plugin URI:  		https://github.com/SamSkull19/WordSprint-Plugin
- * Description:         A self-hosted Wordle game with a DB-backed word list, leaderboard, and shortcode embed.
+ * Description:         A self-hosted word-guessing game with a DB-backed word list, leaderboard, and shortcode embed.
  * Version:             1.0.0
  * Requires at least:   6.0
  * Requires PHP:        7.4

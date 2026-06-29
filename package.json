@@ -2,7 +2,7 @@
   "name": "wordsprint",
   "version": "1.0.0",
   "private": true,
-  "description": "Wordsprint - a DB-backed Wordle game for WordPress with admin word management and leaderboard.",
+  "description": "Wordsprint - a DB-backed word-guessing game for WordPress with admin word management and leaderboard.",
   "scripts": {
     "build": "wp-scripts build --webpack-copy-php",
     "start": "wp-scripts start",

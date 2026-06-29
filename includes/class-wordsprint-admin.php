@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Admin class for registering the Wordle admin menu and loading assets.
+ * Admin class for registering the WordSprint admin menu and loading assets.
  *
  * @package WordSprint
  */
